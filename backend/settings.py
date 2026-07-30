@@ -12,8 +12,13 @@ load_dotenv(BASE_DIR / ".env")
 
 # ================= CORE =================
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'django-insecure-CHANGE-THIS-IN-PROD-9f3b2c1d4e5f6a7b8')
-DEBUG = True
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "0.0.0.0"]
+DEBUG = os.getenv("DEBUG", "False") == "True"
+ALLOWED_HOSTS = [
+    "127.0.0.1",
+    "localhost",
+    "0.0.0.0",
+    
+]
 
 # ================= APPS =================
 INSTALLED_APPS = [
@@ -54,6 +59,7 @@ SITE_ID = 1
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -61,7 +67,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
-     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
@@ -126,6 +131,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5174",
     "http://localhost:5175",
     "http://127.0.0.1:5175",
+    "https://*.onrender.com",
 ]
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = ["*"]

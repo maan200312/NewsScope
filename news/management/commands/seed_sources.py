@@ -172,7 +172,6 @@ class Command(BaseCommand):
                         "language": source["language"],
                         "bias": source.get("bias", "center"),
                         "bias_score": source.get("bias_score", 50),
-                        "rating": source.get("rating", "mostly-factual"),
                         "is_active": is_active,
                     },
                 )

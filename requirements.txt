@@ -19,3 +19,5 @@ hdbscan==0.8.44
 python-decouple==3.8
 python-dotenv==1.2.2
 Pillow==12.3.0
+cryptography==44.0.0
+cffi==1.17.1

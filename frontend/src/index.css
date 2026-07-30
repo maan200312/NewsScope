@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-bg: #f7f6f233;
+  --color-surface: #fcfbf856;
+  --color-text: #1f1f1b;
+  --color-muted: #6f6b65;
+  --color-line: #1f1f1b;
+}
+
+.dark {
+  --color-bg: #151513;
+  --color-surface: #1d1d1a;
+  --color-text: #f5f2eb;
+  --color-muted: #b2aca4;
+  --color-line: #2a2a26;
+}
+
+/* 👇 YE 3 LINES ADD KAREIN */
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color 0.3s, color 0.3s;
+  border-color: var(--color-line);
+}

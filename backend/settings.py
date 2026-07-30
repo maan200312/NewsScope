@@ -3,6 +3,7 @@ import os
 import ssl
 from datetime import timedelta
 from dotenv import load_dotenv
+import dj_database_url
 
 load_dotenv()
 
@@ -60,17 +61,19 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',
+     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'backend.urls'
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 # ================= DATABASE =================
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(
+        default='sqlite:///' + os.path.join(BASE_DIR, 'db.sqlite3'),
+        conn_max_age=600
+    )
 }
 
 # ================= AUTH =================
@@ -195,11 +198,10 @@ SOCIALACCOUNT_PROVIDERS = {
 }
 
 # ================= CELERY =================
-CELERY_BROKER_URL = 'rediss://default:gQAAAAAAAXi2AAIgcDJmZmMyYWRkYjU5MmU0OWRjYjY0MTA5ZjMzYmE1YmQ3NQ@smashing-possum-96438.upstash.io:6379'
-CELERY_RESULT_BACKEND = 'rediss://default:gQAAAAAAAXi2AAIgcDJmZmMyYWRkYjU5MmU0OWRjYjY0MTA5ZjMzYmE1YmQ3NQ@smashing-possum-96438.upstash.io:6379'
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER_URL', 'redis://localhost:6379/0')
+CELERY_RESULT_BACKEND = os.getenv('CELERY_RESULT_BACKEND', 'redis://localhost:6379/0')
 CELERY_TIMEZONE = 'Asia/Karachi'
 CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
-
 CELERY_BROKER_USE_SSL = {
     "ssl_cert_reqs": ssl.CERT_NONE,
     "ssl_check_hostname": False,
@@ -219,3 +221,5 @@ CELERY_BEAT_SCHEDULE = {
         'schedule': 86400.0,
     },
 }
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

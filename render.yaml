@@ -33,18 +33,10 @@ services:
           name: newsscape-redis
           property: connectionString
 
-    - type: cron
-    name: newsscape-pipeline
-    env: python
-    schedule: "0 */6 * * *"
-    buildCommand: pip install -r requirements.txt
-    startCommand: python manage.py fetch_news && python manage.py shell -c "from news.services.embeddings import generate_embeddings; generate_embeddings()" && python manage.py shell -c "from news.services.clustering import save_clusters; save_clusters()"
-
 databases:
     - name: newsscape-db
     plan: free
-
     - name: newsscape-redis
-    type: redis
     plan: free
-    maxmemoryPolicy: allkeys-lru
+    databaseName: redis
+    ipAllowList: []

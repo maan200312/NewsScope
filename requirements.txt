@@ -24,3 +24,4 @@ cffi==1.17.1
 whitenoise==6.6.0
 psycopg2-binary==2.9.10
 sentence-transformers==2.2.2
+gradio_client
